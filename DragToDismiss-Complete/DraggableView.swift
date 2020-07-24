@@ -41,7 +41,7 @@ class DraggableView: UIView {
     }
 
     
-    func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
+    @objc func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
         let translation = panGesture.translation(in: superview)
         let velocityInView = panGesture.velocity(in: superview)
         

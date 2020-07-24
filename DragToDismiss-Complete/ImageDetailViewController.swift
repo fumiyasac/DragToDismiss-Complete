@@ -74,12 +74,18 @@ extension ImageDetailViewController: DraggableViewDelegate{
     
     func panGestureDidChange(_ panGesture: UIPanGestureRecognizer, originalCenter: CGPoint, translation: CGPoint, velocityInView: CGPoint) {
         containerView?.frame.origin = CGPoint(
-            x: containerView!.frame.origin.x,
+            x: translation.x, //containerView!.frame.origin.x,
             y: translation.y
         )
         
-        if containerView.center.y > originalCenter.y {
-            let alpha = 1 - (abs(self.view.bounds.height/2 - containerView.center.y)/(self.view.bounds.height))
+        if containerView.center.y != originalCenter.y || containerView.center.x != originalCenter.x {
+            
+            // MEMO: 試しに調整
+            let alphaH = abs(self.view.bounds.height/2 - containerView.center.y)/(self.view.bounds.height)
+            let alphaW = abs(self.view.bounds.width/2 - containerView.center.x)/(self.view.bounds.width)
+            let alphaAbs = max(alphaH ,alphaW)
+            
+            let alpha = 1 - (alphaAbs)
             self.fadeView?.alpha = alpha
         }else{
             self.fadeView?.alpha = 1
@@ -87,7 +93,10 @@ extension ImageDetailViewController: DraggableViewDelegate{
     }
     
     func panGestureDidEnd(_ panGesture: UIPanGestureRecognizer, originalCenter: CGPoint, translation: CGPoint, velocityInView: CGPoint) {
-        if containerView.center.y >= containerView.bounds.height * 0.66{
+
+        // MEMO: 試しに調整
+        if containerView.center.y >= containerView.bounds.height * 0.98 || containerView.center.y <= containerView.bounds.height * 0.08 ||
+           containerView.center.x >= containerView.bounds.width * 0.98 || containerView.center.x <= containerView.bounds.width * 0.08{
             if let _ = transitioningDelegate{
                 self.dismiss(animated: true, completion: nil)
             }else{

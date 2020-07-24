@@ -28,7 +28,7 @@ class Animator: NSObject,UIViewControllerTransitioningDelegate, UIViewController
             toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
             container.addSubview(toViewController.view)
             toViewController.view.alpha = 0
-            container.bringSubview(toFront: toViewController.view)
+            container.bringSubviewToFront(toViewController.view)
             toViewController.view.layoutIfNeeded()
 
             //add a copy at the right location in both views
@@ -69,7 +69,7 @@ class Animator: NSObject,UIViewControllerTransitioningDelegate, UIViewController
             if fromViewController.modalPresentationStyle == UIModalPresentationStyle.none{
                 toViewController.view.frame = transitionContext.finalFrame(for: toViewController)
                 container.addSubview(toViewController.view)
-                container.sendSubview(toBack: toViewController.view)
+                container.sendSubviewToBack(toViewController.view)
             }
             
             if fromTargetCopy != nil && toTargetCopy != nil && cellImageView != nil{
